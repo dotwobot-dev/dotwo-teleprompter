@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DoTwo Teleprompter Control</title>
+    <link rel="stylesheet" href="./control.css">
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="editor-pane">
+        <header class="topbar">
+          <div class="brand-block">
+            <img class="brand-logo" src="./assets/dotwo-teleprompter-logo.png" alt="DoTwo Teleprompter">
+          </div>
+          <div class="topbar-controls">
+            <div class="screen-picker">
+              <span class="topbar-row-label">Pantalla</span>
+              <select id="screenSelect" aria-label="Pantalla"></select>
+              <button id="refreshScreens" class="icon-button" title="Actualizar pantallas">↻</button>
+            </div>
+            <div class="screen-tools">
+              <span class="topbar-row-label">Acciones</span>
+              <div class="action-buttons">
+                <button id="loadFile" class="secondary" data-short-label="Cargar">Cargar archivo</button>
+                <button id="openPrompter" data-short-label="Abrir">Abrir prompter</button>
+                <button id="closePrompter" class="secondary">Cerrar</button>
+                <button id="compactDirectToggle" class="secondary" data-short-label="Panel">Panel directo</button>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <section class="script-tools scriptbar" aria-label="Guion y sesiones">
+          <div class="scriptbar-group recents-group">
+            <div class="section-label">Archivo</div>
+            <label class="recent-row">
+              <span>Recientes</span>
+              <select id="recentFiles"></select>
+            </label>
+            <button id="openRecent" class="secondary">Abrir</button>
+          </div>
+          <div class="scriptbar-group script-actions-group">
+            <div class="section-label">Guion</div>
+            <div class="script-actions">
+              <button id="markupHelpButton" class="secondary">Chuleta</button>
+              <button id="saveText" class="secondary">Guardar txt</button>
+              <button id="saveSession" class="secondary">Guardar sesión</button>
+              <button id="openSession" class="secondary">Abrir sesión</button>
+            </div>
+          </div>
+          <p id="scriptStatus" class="script-status">Preparado</p>
+          <div class="editor-behavior">
+            <label class="follow-cursor-row">
+              <span title="Seguir escritura">Seg. escritura</span>
+              <input id="followCursor" type="checkbox">
+            </label>
+            <label class="follow-cursor-row">
+              <span title="Seguir lectura">Seg. lectura</span>
+              <input id="currentWordHighlight" type="checkbox">
+            </label>
+            <span id="stateBadge" class="state-badge">Preparado</span>
+            <div class="mode-buttons" role="group" aria-label="Modo de edición">
+              <button id="rehearsalMode" class="mode-button" type="button">Ensayo</button>
+              <button id="liveMode" class="mode-button" type="button">Directo</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="script-map" aria-label="Resumen y secciones del guion">
+          <label class="section-jump">
+            <span>Sección</span>
+            <select id="sectionSelect"></select>
+          </label>
+          <div class="jump-pair section-jump-actions">
+            <button id="jumpSectionControl" class="secondary">Control</button>
+            <button id="jumpSectionPrompter" class="secondary">Talento</button>
+          </div>
+          <label class="mark-jump">
+            <span>Marca</span>
+            <select id="markSelect"></select>
+          </label>
+          <div class="jump-pair mark-jump-actions">
+            <button id="jumpMarkControl" class="secondary">Control</button>
+            <button id="jumpMarkPrompter" class="secondary">Talento</button>
+          </div>
+          <div class="script-stats">
+            <div class="script-search" role="search" aria-label="Buscar en el guion">
+              <input id="scriptSearchInput" type="search" placeholder="Buscar..." autocomplete="off">
+              <button id="scriptSearchPrev" class="secondary" type="button" title="Resultado anterior">↑</button>
+              <button id="scriptSearchNext" class="secondary" type="button" title="Resultado siguiente">↓</button>
+              <span id="scriptSearchCount">0/0</span>
+              <button id="scriptSearchClear" class="secondary" type="button" title="Limpiar búsqueda">×</button>
+            </div>
+            <span id="wordCount">0 palabras</span>
+            <span id="sectionCount">0 secciones</span>
+            <span id="estimatedDuration">0:00 estimado</span>
+            <span id="markupSummary">0 marcas</span>
+            <span id="currentWordStatus">Línea: --</span>
+            <span id="cueNow">Ahora: --</span>
+            <span id="cueNext">Siguiente: --</span>
+            <span id="markupWarnings" class="warning-pill" hidden>0 avisos</span>
+          </div>
+        </section>
+
+        <section class="compact-direct-panel" aria-label="Panel compacto de directo">
+          <div class="compact-status">
+            <div>
+              <span class="compact-label">Estado</span>
+              <strong id="compactStatus">Prompter cerrado</strong>
+            </div>
+            <div>
+              <span class="compact-label">Progreso</span>
+              <strong id="compactProgressText">0%</strong>
+            </div>
+          </div>
+
+          <div class="compact-progress-track">
+            <div id="compactProgressBar"></div>
+          </div>
+
+          <div class="compact-time">
+            <span id="compactTimeText">--:-- total</span>
+            <span id="compactRemainingText">--:-- restante</span>
+          </div>
+
+          <div class="compact-transport">
+            <button id="compactReset" class="secondary">Reiniciar</button>
+            <button id="compactBackward" class="compact-round">−</button>
+            <button id="compactPlayPause" class="primary compact-play">Play</button>
+            <button id="compactForward" class="compact-round">+</button>
+            <button id="compactStandbyToggle" class="secondary">Pantalla negra</button>
+          </div>
+
+          <div class="compact-jumps">
+            <button id="compactJumpStart" class="secondary">Inicio</button>
+            <button id="compactJumpMiddle" class="secondary">Mitad</button>
+            <button id="compactJumpEnd" class="secondary">Final</button>
+          </div>
+
+          <div class="compact-speed">
+            <span class="compact-label">Velocidad</span>
+            <button id="compactSpeedDown" class="secondary">−</button>
+            <strong id="compactSpeedValue">2.2 palabras/s</strong>
+            <button id="compactSpeedUp" class="secondary">+</button>
+          </div>
+
+          <div class="compact-cues">
+            <div>
+              <span class="compact-label">Ahora</span>
+              <strong id="compactCueNow">--</strong>
+            </div>
+            <div>
+              <span class="compact-label">Siguiente</span>
+              <strong id="compactCueNext">--</strong>
+            </div>
+          </div>
+        </section>
+
+        <div class="script-editor-wrap">
+          <textarea id="scriptText" spellcheck="false"></textarea>
+          <div id="readingWordHighlight" class="reading-word-highlight" hidden></div>
+        </div>
+      </section>
+
+      <aside class="control-pane">
+        <div class="control-fixed">
+          <section class="transport">
+            <button id="reset" class="round" title="Reiniciar">⟲</button>
+            <button id="backward" class="round" title="Retroceder">−</button>
+            <button id="playPause" class="primary transport-main">Play</button>
+            <button id="forward" class="round" title="Avanzar">+</button>
+          </section>
+
+          <div class="status-row">
+            <span id="prompterStatus">Completado</span>
+            <span id="progressText">0%</span>
+          </div>
+          <div class="progress-track">
+            <div id="progressBar"></div>
+          </div>
+
+          <div class="time-row">
+            <span id="timeText">--:-- total</span>
+            <span id="remainingText">--:-- restante</span>
+          </div>
+
+          <button id="countdownStart" class="countdown-action">Cuenta atrás</button>
+          <button id="standbyToggle" class="secondary standby-action">Pantalla negra</button>
+
+          <section class="jump-tools">
+            <button id="jumpStart" class="secondary">Inicio</button>
+            <button id="jumpMiddle" class="secondary">Mitad</button>
+            <button id="jumpEnd" class="secondary">Final</button>
+          </section>
+
+          <p class="shortcut-hints">Espacio play inmediato · ⌘+Enter cuenta atrás · B pantalla negra · ←/→ párrafo · ↑/↓ velocidad</p>
+        </div>
+
+        <div class="settings-scroll">
+          <section class="settings-grid">
+            <label>
+              <span>Velocidad lectura</span>
+              <input id="speed" type="range" min="0.5" max="4.5" step="0.1">
+              <output id="speedValue"></output>
+            </label>
+
+            <div class="preset-group">
+              <span>Presets velocidad</span>
+              <div class="preset-buttons">
+                <button id="speedSlow" class="secondary">Lento</button>
+                <button id="speedNormal" class="secondary">Normal</button>
+                <button id="speedFast" class="secondary">Rápido</button>
+              </div>
+            </div>
+
+            <label>
+              <span>Cuenta atrás</span>
+              <select id="countdownSeconds">
+                <option value="0">Sin cuenta</option>
+                <option value="3">3 segundos</option>
+                <option value="5">5 segundos</option>
+                <option value="10">10 segundos</option>
+              </select>
+            </label>
+
+            <label>
+              <span>Tamaño</span>
+              <input id="fontSize" type="range" min="28" max="110" step="1">
+              <output id="fontSizeValue"></output>
+            </label>
+
+            <label>
+              <span>Interlineado</span>
+              <input id="lineHeight" type="range" min="1.05" max="1.9" step="0.05">
+              <output id="lineHeightValue"></output>
+            </label>
+
+            <label>
+              <span>Ancho texto</span>
+              <input id="columnWidth" type="range" min="45" max="95" step="1">
+              <output id="columnWidthValue"></output>
+            </label>
+
+            <label>
+              <span>Posición vertical</span>
+              <input id="verticalPosition" type="range" min="-50" max="45" step="1">
+              <output id="verticalPositionValue"></output>
+            </label>
+          </section>
+
+          <section class="toggles">
+            <label class="switch-row">
+              <span>Espejo</span>
+              <input id="mirror" type="checkbox">
+            </label>
+            <label class="switch-row">
+              <span>Guía central</span>
+              <input id="guide" type="checkbox">
+            </label>
+            <label class="switch-row">
+              <span>Tema claro</span>
+              <input id="lightTheme" type="checkbox">
+            </label>
+          </section>
+
+          <section class="setup-panel">
+            <span class="section-label">Tipografía</span>
+            <label class="full-row">
+              <span>Familia</span>
+              <select id="fontFamily">
+                <option value="systemSans">Sans del sistema</option>
+                <option value="arial">Arial</option>
+                <option value="verdana">Verdana</option>
+                <option value="helvetica">Helvetica</option>
+                <option value="serif">Serif clásica</option>
+              </select>
+            </label>
+          </section>
+
+          <section class="setup-panel preset-panel">
+            <span class="section-label">Presets setup</span>
+            <label class="full-row">
+              <span>Preset</span>
+              <select id="setupPresetSelect"></select>
+            </label>
+            <div class="setup-preset-actions">
+              <button id="applySetupPreset" class="secondary">Aplicar</button>
+              <button id="saveSetupPreset" class="secondary">Guardar</button>
+              <button id="deleteSetupPreset" class="secondary">Borrar</button>
+            </div>
+          </section>
+        </div>
+      </aside>
+    </main>
+
+    <dialog id="markupHelpDialog" class="markup-dialog">
+      <form method="dialog">
+        <header class="dialog-header">
+          <div>
+            <p class="eyebrow">Guion</p>
+            <h2>Códigos rápidos</h2>
+          </div>
+          <button class="secondary icon-button" value="close" aria-label="Cerrar">×</button>
+        </header>
+        <div class="markup-cheatsheet">
+          <section class="markup-insert-panel" aria-label="Insertar códigos">
+            <div class="quick-insert-row">
+              <label>
+                <span>CAM</span>
+                <input id="markupCameraValue" type="text" value="1" maxlength="12">
+              </label>
+              <button id="insertCameraCode" class="secondary" type="button">Insertar</button>
+            </div>
+            <div class="quick-insert-row">
+              <label>
+                <span>AVISO</span>
+                <input id="markupNoticeValue" type="text" placeholder="Mira a cámara 2">
+              </label>
+              <button id="insertNoticeCode" class="secondary" type="button">Insertar</button>
+            </div>
+            <div class="quick-actions-row">
+              <button id="insertEndCueCode" class="secondary" type="button">FIN</button>
+              <button id="wrapHighlightCode" class="secondary" type="button">Resaltar</button>
+              <button id="insertOperatorNoteCode" class="secondary" type="button">Nota //</button>
+              <button id="cleanText" class="secondary" type="button">Limpiar</button>
+            </div>
+          </section>
+
+          <section class="markup-validation-panel" aria-label="Validación de guion">
+            <strong>Resumen</strong>
+            <p id="markupValidationSummary">Sin marcas.</p>
+            <ul id="markupValidationList"></ul>
+          </section>
+
+          <article>
+            <code>// Nota interna</code>
+            <p>Visible solo en Control. No aparece en el prompter.</p>
+          </article>
+          <article>
+            <code>[CAM: 1]</code>
+            <p>Activa una indicación flotante desde ese punto del texto.</p>
+          </article>
+          <article>
+            <code>[AVISO: Mira a cámara 2]</code>
+            <p>Activa una indicación flotante libre desde ese punto.</p>
+          </article>
+          <article>
+            <code>[FIN AVISO]</code>
+            <p>Quita la indicación flotante desde ese punto del texto.</p>
+          </article>
+          <article>
+            <code>==palabra==</code>
+            <p>Resalta una palabra o frase dentro del texto visible.</p>
+          </article>
+          <article>
+            <code># Bloque</code>
+            <p>Crea una sección para saltar desde el selector.</p>
+          </article>
+        </div>
+      </form>
+    </dialog>
+
+    <script src="./control.js"></script>
+  </body>
+</html>

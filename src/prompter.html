@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DoTwo Teleprompter</title>
+    <link rel="stylesheet" href="./prompter.css">
+  </head>
+  <body>
+    <div id="guideLine"></div>
+    <div id="countdownOverlay"></div>
+    <div id="cueOverlay" aria-live="polite"></div>
+    <main id="stage">
+      <article id="content"></article>
+    </main>
+    <nav id="soloControls" class="solo-controls" aria-label="Control portatil" hidden>
+      <button id="soloReset" title="Reiniciar lectura">⟲</button>
+      <button id="soloBack" title="Parrafo anterior">−</button>
+      <button id="soloPlay" class="solo-play">Play</button>
+      <button id="soloForward" title="Parrafo siguiente">+</button>
+      <button id="soloSlower" title="Bajar velocidad">Vel −</button>
+      <span id="soloSpeed">2.2 p/s</span>
+      <button id="soloFaster" title="Subir velocidad">Vel +</button>
+    </nav>
+    <script src="./prompter.js"></script>
+  </body>
+</html>

@@ -1,0 +1,14 @@
+DoTwo Teleprompter
+Copyright 2026 Domingo Moreno / DoTwo
+
+Original concept and project direction: Domingo Moreno / DoTwo.
+
+This project was created to provide a practical desktop teleprompter
+workflow for audiovisual production, with separate control and prompter
+windows, local operation, and operator-oriented controls.
+
+Initial implementation and tooling were developed with OpenClaw/Bender
+assistance.
+
+This product includes third-party open source software. See
+THIRD_PARTY_NOTICES.md for dependency notices.

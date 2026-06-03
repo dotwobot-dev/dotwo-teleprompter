@@ -1,0 +1,14 @@
+node_modules/
+dist/
+dist-legacy/
+release/
+.DS_Store
+npm-debug.log*
+pnpm-lock.yaml
+yarn.lock
+logs/
+reports/
+artifacts/
+build-output/
+*.log
+*.tmp

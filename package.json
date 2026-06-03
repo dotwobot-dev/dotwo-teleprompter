@@ -1,0 +1,50 @@
+{
+  "name": "dotwo-teleprompter",
+  "version": "0.1.0",
+  "description": "Desktop teleprompter app with separate control and prompter windows.",
+  "author": "Domingo Moreno / DoTwo",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dotwobot-dev/dotwo-teleprompter.git"
+  },
+  "main": "src/main.js",
+  "scripts": {
+    "start": "electron .",
+    "check": "node --check src/main.js && node --check src/preload.js && node --check src/control.js && node --check src/prompter.js",
+    "pack": "electron-builder --dir",
+    "pack:mac-arm64": "electron-builder --dir --arm64",
+    "pack:mac-intel": "electron-builder --dir --x64",
+    "pack:mac-legacy": "electron-builder --dir --x64 --config.electronVersion=26.6.10 --config.directories.output=dist-legacy",
+    "release:mac": "bash scripts/release-mac.sh",
+    "dist": "electron-builder"
+  },
+  "build": {
+    "appId": "com.dotwo.teleprompter",
+    "productName": "DoTwo Teleprompter",
+    "files": [
+      "src/**/*",
+      "package.json"
+    ],
+    "directories": {
+      "buildResources": "build",
+      "output": "dist"
+    },
+    "mac": {
+      "category": "public.app-category.video",
+      "icon": "build/icon.icns",
+      "target": [
+        "dmg",
+        "zip"
+      ]
+    }
+  },
+  "devDependencies": {
+    "electron": "^31.7.7",
+    "electron-builder": "^26.8.1"
+  },
+  "dependencies": {
+    "mammoth": "^1.12.0",
+    "pdf-parse": "^1.1.1"
+  }
+}
