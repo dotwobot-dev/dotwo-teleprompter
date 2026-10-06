@@ -6,6 +6,7 @@ const path = require("path");
 
 let controlWindow;
 let prompterWindow;
+let previewCapture;
 const TEXT_EXTENSIONS = ["txt", "md", "markdown", "srt", "vtt", "csv"];
 const DOCUMENT_EXTENSIONS = ["docx", "pdf"];
 
@@ -236,6 +237,50 @@ async function createPrompterWindow(displayId) {
   return true;
 }
 
+async function capturePrompterPreview() {
+  const target = prompterWindow;
+  if (!target || target.isDestroyed()) {
+    return { status: "closed" };
+  }
+  if (!controlWindow.isVisible() || controlWindow.isMinimized()) {
+    return { status: "idle" };
+  }
+  if (target.webContents.isLoadingMainFrame()) {
+    return { status: "loading" };
+  }
+  if (previewCapture) {
+    return previewCapture;
+  }
+
+  // Share one capture and discard frames from a window closed during capture.
+  previewCapture = (async () => {
+    try {
+      const image = await target.webContents.capturePage(undefined, { stayHidden: true });
+      if (target !== prompterWindow || target.isDestroyed()) {
+        return { status: "closed" };
+      }
+      if (image.isEmpty()) {
+        return { status: "unavailable" };
+      }
+      const { width, height } = image.getSize();
+      return {
+        status: "ready",
+        frame: image.resize({ width: Math.min(width, 640), quality: "good" }).toDataURL(),
+        width,
+        height
+      };
+    } catch {
+      return { status: "unavailable" };
+    }
+  })();
+
+  try {
+    return await previewCapture;
+  } finally {
+    previewCapture = null;
+  }
+}
+
 app.whenReady().then(() => {
   createControlWindow();
 
@@ -269,6 +314,13 @@ ipcMain.handle("prompter:close", () => {
     prompterWindow.close();
   }
   return true;
+});
+
+ipcMain.handle("prompter:preview", (event) => {
+  if (!controlWindow || event.sender !== controlWindow.webContents) {
+    return { status: "unavailable" };
+  }
+  return capturePrompterPreview();
 });
 
 ipcMain.on("prompter:set-state", (_event, state) => {

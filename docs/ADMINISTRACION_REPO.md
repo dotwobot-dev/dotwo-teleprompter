@@ -20,7 +20,8 @@ los recursos activos.
 
 - `node_modules/`: se regenera con `npm install`.
 - `dist/` y `dist-legacy/`: salidas de `electron-builder`.
-- `release/`: ZIPs finales generados por `npm run release:mac`.
+- `release/`: ZIPs beta y candidatos ZIP/DMG/PKG firmados.
+- Certificados, CSRs, claves, `.p12`, `.p8`, `.env` y credenciales del Llavero.
 - `logs/`, `reports/`, `artifacts/`, temporales y `.DS_Store`.
 - Bocetos y candidatos antiguos de marca que ya no alimentan el build.
 
@@ -47,11 +48,13 @@ Patron de archivo:
 
 ```bash
 npm run check
+npm test
 ```
 
 ## Politica de limpieza local
 
-Se pueden borrar y regenerar cuando haga falta:
+Se pueden borrar y regenerar cuando haga falta, salvo candidatos enviados
+a Apple que aun deban retomarse:
 
 ```text
 node_modules/
@@ -67,11 +70,19 @@ reinstalar:
 npm install
 ```
 
+No borrar ni modificar `release/signed/<ejecucion>/<variante>/` cuando su
+manifiesto tenga una solicitud pendiente. `--resume` necesita esa misma app,
+sus artefactos y el manifiesto; recompilarla no equivale a retomar su ticket.
+Archivar los candidatos verificados antes de limpiarlos. Las claves privadas
+y credenciales siguen en el Llavero del host, no en los backups normales del NAS.
+
 Antes de generar paquetes nuevos:
 
 ```bash
 npm run check
-npm run release:mac
+npm test
+npm run check:mac-signing
+npm run release:mac:signed -- --all
 ```
 
 ## Limpieza realizada

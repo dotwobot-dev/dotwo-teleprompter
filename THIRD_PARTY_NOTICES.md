@@ -5,7 +5,7 @@ their own licenses.
 
 Direct dependencies checked for this repository:
 
-- Electron 31.7.7: MIT license.
+- Electron 43.7.7 (modern builds), 26.6.10 (legacy Intel builds): MIT license.
 - electron-builder 26.8.1: MIT license.
 - mammoth 1.12.0: BSD-2-Clause license.
 - pdf-parse 1.1.1: MIT license.

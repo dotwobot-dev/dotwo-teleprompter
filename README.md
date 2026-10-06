@@ -17,9 +17,20 @@ Consulta también `THIRD_PARTY_NOTICES.md` para dependencias como Electron, Mamm
 
 ## Distribución
 
-Las builds actuales son ZIPs beta sin firmar ni notarizar. macOS puede mostrar avisos de seguridad al abrir artefactos descargados.
+Los ZIPs de la beta `0.1.0` archivados siguen sin firmar ni notarizar. La version
+local `0.2.0` es un candidato sin release publica en GitHub. Una copia de la
+variante Intel legacy ya se usa internamente en la facultad; esto no valida
+las otras variantes ni cierra los manifiestos de release.
 
-El siguiente paso previsto para publicación estable es firma con Apple Developer ID, notarización y artefactos firmados. Detalle en [Distribución](docs/DISTRIBUTION.md).
+El flujo nuevo prepara ZIP, DMG y PKG con Developer ID y exige notarizacion y
+verificaciones locales antes de marcar un candidato como valido. Modernas:
+Apple Silicon e Intel, macOS 12+, Electron 43.7.7. Compatibilidad: Intel,
+macOS 10.13+, Electron 26.6.10 sin soporte de seguridad.
+Detalle y estado real en [Distribución](docs/DISTRIBUTION.md).
+
+Para instalacion manual se usara el DMG: arrastra la app a Aplicaciones,
+expulsa la imagen y abre Teleprompter desde Aplicaciones. El PKG es la
+alternativa para despliegues gestionados. [Guia de instalacion](docs/INSTALLATION.md).
 
 ## Uso rápido
 
@@ -32,6 +43,7 @@ npm start
 
 - Selección de pantalla externa.
 - Ventana de prompter independiente en fullscreen.
+- Visor plegable de la salida de Talento arriba a la derecha de Control y en Panel directo (presente en los tres candidatos internos; validacion funcional completa pendiente).
 - Modo portátil de una sola pantalla con control inferior dentro del prompter.
 - Play/pause inmediato con espacio.
 - Modo Ensayo/Directo para bloquear edición accidental.
@@ -68,8 +80,11 @@ npm start
 ```bash
 npm start      # Ejecuta la app en modo desarrollo local
 npm run check  # Valida sintaxis JS
+npm test       # Pruebas del visor y del flujo de firma
 npm run pack   # Genera una app desempaquetada en dist/
-npm run release:mac # Genera ZIPs para Apple Silicon, Intel moderno y legacy
+npm run release:mac # Flujo beta, sin garantizar notarizacion
+npm run check:mac-signing # Comprueba certificados y perfil del Llavero
+npm run release:mac:signed -- --all # Candidatos ZIP/DMG/PKG de las tres variantes
 npm run dist   # Genera artefactos distribuibles como .dmg y .zip en dist/
 ```
 
@@ -83,6 +98,8 @@ npm run dist   # Genera artefactos distribuibles como .dmg y .zip en dist/
 - [Dependencias](docs/DEPENDENCIES.md)
 - [Empaquetado](docs/BUILD.md)
 - [Distribución](docs/DISTRIBUTION.md)
+- [Instalacion desde DMG](docs/INSTALLATION.md)
+- [Manual rapido con capturas](docs/manual/README.md)
 - [Roadmap público](docs/ROADMAP.md)
 - [Beta operativa](docs/BETA.md)
 - [Conceptos de icono](docs/ICON_CONCEPTS.md)

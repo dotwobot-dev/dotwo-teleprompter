@@ -165,6 +165,17 @@
 
       <aside class="control-pane">
         <div class="control-fixed">
+          <details id="talentPreview" class="talent-preview" open>
+            <summary>
+              <span>Talento</span>
+              <span id="talentPreviewStatus" class="talent-preview-status">Cerrado</span>
+            </summary>
+            <div class="talent-preview-viewport">
+              <img id="talentPreviewImage" alt="Salida de la pantalla del talento" draggable="false" hidden>
+              <span id="talentPreviewEmpty" class="talent-preview-empty">Prompter cerrado</span>
+            </div>
+          </details>
+
           <section class="transport">
             <button id="reset" class="round" title="Reiniciar">⟲</button>
             <button id="backward" class="round" title="Retroceder">−</button>

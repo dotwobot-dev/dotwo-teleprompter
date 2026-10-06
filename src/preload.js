@@ -9,6 +9,7 @@ contextBridge.exposeInMainWorld("teleprompter", {
   openSession: () => ipcRenderer.invoke("session:open"),
   openPrompter: (displayId) => ipcRenderer.invoke("prompter:open", displayId),
   closePrompter: () => ipcRenderer.invoke("prompter:close"),
+  capturePreview: () => ipcRenderer.invoke("prompter:preview"),
   setState: (state) => ipcRenderer.send("prompter:set-state", state),
   sendCommand: (command) => ipcRenderer.send("prompter:command", command),
   sendRuntime: (runtime) => ipcRenderer.send("prompter:runtime", runtime),

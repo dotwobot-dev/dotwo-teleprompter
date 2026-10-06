@@ -153,6 +153,9 @@ let searchNeedsFocus = false;
 let isCompactDirect = false;
 let readableWordRanges = [];
 let lastFollowedLineKey = "";
+let previewTimer = 0;
+let previewGeneration = 0;
+let previewConnection = "closed";
 
 const els = {
   screenSelect: document.querySelector("#screenSelect"),
@@ -258,8 +261,13 @@ const els = {
   currentWordHighlight: document.querySelector("#currentWordHighlight"),
   mirror: document.querySelector("#mirror"),
   guide: document.querySelector("#guide"),
-  lightTheme: document.querySelector("#lightTheme")
+  lightTheme: document.querySelector("#lightTheme"),
+  talentPreview: document.querySelector("#talentPreview"),
+  talentPreviewImage: document.querySelector("#talentPreviewImage"),
+  talentPreviewEmpty: document.querySelector("#talentPreviewEmpty"),
+  talentPreviewStatus: document.querySelector("#talentPreviewStatus")
 };
+const previewHome = els.talentPreview.parentElement;
 
 init();
 
@@ -293,6 +301,7 @@ async function init() {
 
   window.teleprompter.onClosed(() => {
     isPrompterOpen = false;
+    restartPrompterPreview();
     isPlaying = false;
     isCountingDown = false;
     isStandby = false;
@@ -310,6 +319,12 @@ async function init() {
 }
 
 function bindControls() {
+  els.talentPreview.addEventListener("toggle", restartPrompterPreview);
+  document.addEventListener("visibilitychange", restartPrompterPreview);
+  window.addEventListener("pagehide", () => {
+    clearTimeout(previewTimer);
+    previewGeneration += 1;
+  });
   els.refreshScreens.addEventListener("click", refreshScreens);
   els.loadFile.addEventListener("click", loadFile);
   els.markupHelpButton.addEventListener("click", () => {
@@ -494,6 +509,70 @@ async function openPrompter() {
   isPrompterOpen = await window.teleprompter.openPrompter(els.screenSelect.value);
   renderStatus();
   sendState();
+  restartPrompterPreview();
+}
+
+function restartPrompterPreview() {
+  clearTimeout(previewTimer);
+  const generation = ++previewGeneration;
+  if (!isPrompterOpen) {
+    previewConnection = "closed";
+    showPreviewPlaceholder("Prompter cerrado");
+    renderPreviewStatus();
+    return;
+  }
+  if (!els.talentPreview.open || document.hidden) {
+    return;
+  }
+  if (previewConnection === "closed") {
+    previewConnection = "loading";
+    showPreviewPlaceholder("Conectando");
+    renderPreviewStatus();
+  }
+  refreshPrompterPreview(generation);
+}
+
+async function refreshPrompterPreview(generation) {
+  try {
+    const preview = await window.teleprompter.capturePreview();
+    if (generation !== previewGeneration) return;
+    previewConnection = preview.status;
+    if (preview.status === "ready") {
+      if (els.talentPreviewImage.src !== preview.frame) {
+        els.talentPreviewImage.src = preview.frame;
+      }
+      els.talentPreviewImage.hidden = false;
+      els.talentPreviewEmpty.hidden = true;
+      els.talentPreviewImage.title = `${preview.width} x ${preview.height}`;
+    } else {
+      showPreviewPlaceholder(preview.status === "loading" ? "Conectando" : "Vista no disponible");
+    }
+  } catch {
+    if (generation !== previewGeneration) return;
+    previewConnection = "unavailable";
+    showPreviewPlaceholder("Vista no disponible");
+  }
+  if (generation !== previewGeneration) return;
+  renderPreviewStatus();
+  previewTimer = setTimeout(
+    () => refreshPrompterPreview(generation),
+    isPlaying || isCountingDown ? 125 : 333
+  );
+}
+
+function showPreviewPlaceholder(message) {
+  els.talentPreviewImage.hidden = true;
+  els.talentPreviewImage.removeAttribute("src");
+  els.talentPreviewEmpty.textContent = message;
+  els.talentPreviewEmpty.hidden = false;
+}
+
+function renderPreviewStatus() {
+  els.talentPreviewStatus.textContent = !isPrompterOpen
+    ? "Cerrado"
+    : previewConnection === "ready"
+      ? els.prompterStatus.textContent
+      : previewConnection === "loading" ? "Conectando" : "Sin se\u00f1al";
 }
 
 async function loadFile() {
@@ -769,6 +848,7 @@ function renderStatus() {
   els.prompterStatus.textContent = status;
   els.stateBadge.textContent = status;
   els.compactStatus.textContent = status;
+  renderPreviewStatus();
   document.body.dataset.playback = status.toLowerCase().replace(/\s+/g, "-");
 }
 
@@ -974,6 +1054,10 @@ function toggleCompactDirect() {
 function renderCompactDirectMode() {
   document.body.classList.toggle("compact-direct", isCompactDirect);
   els.compactDirectToggle.textContent = isCompactDirect ? "Editar guion" : "Panel directo";
+  const parent = isCompactDirect ? document.querySelector(".compact-direct-panel") : previewHome;
+  if (els.talentPreview.parentElement !== parent) {
+    parent.prepend(els.talentPreview);
+  }
 }
 
 function handleSearchKeydown(event) {

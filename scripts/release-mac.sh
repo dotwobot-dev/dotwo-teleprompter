@@ -16,7 +16,7 @@ ditto -c -k --sequesterRsrc --keepParent "dist/mac-arm64/${APP_NAME}.app" "${REL
 
 echo "==> Build Intel moderno"
 npm run pack:mac-intel
-ditto -c -k --sequesterRsrc --keepParent "dist/mac/${APP_NAME}.app" "${RELEASE_DIR}/${APP_NAME} Intel macOS 10.15+.zip"
+ditto -c -k --sequesterRsrc --keepParent "dist/mac/${APP_NAME}.app" "${RELEASE_DIR}/${APP_NAME} Intel macOS 12+.zip"
 
 echo "==> Build Intel legacy macOS 10.13"
 npm run pack:mac-legacy

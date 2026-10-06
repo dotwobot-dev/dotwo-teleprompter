@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.2.0 - Candidato sin publicar
+
+- DMG con instalacion por arrastre a Aplicaciones, instrucciones en castellano, fondo Retina y guia de instalacion/actualizacion.
+- Visor plegable de Talento en la parte superior de la columna derecha de Control, tambien disponible en Panel directo.
+- Miniatura de la salida real de Prompter mediante captura interna de Electron: incluye espejo, guias, avisos, cuenta atras y pantalla negra, sin recortar ni deformar la imagen.
+- Capturas limitadas en resolucion y frecuencia, sin solapamiento; se suspenden al plegar el visor u ocultar Control.
+- Pruebas automatizadas de acceso IPC, cierre/reapertura, resolucion, concurrencia y recuperacion de capturas.
+- Electron moderno actualizado y fijado a 43.7.7 para Apple Silicon e Intel con macOS 12+; variante Intel 10.13 conservada con Electron 26.6.10.
+- Nuevo flujo de candidatos ZIP/DMG/PKG con certificados Developer ID Application e Installer del Llavero, hardened runtime, notarizacion y verificacion obligatorias.
+- Directorios de salida independientes y manifiesto con estado, variantes y SHA-256; sin publicacion automatica.
+- Pruebas automatizadas de identidades, credenciales, configuracion de variantes y rechazo de notarizaciones pendientes o invalidas.
+- Node 22.12+ para desarrollo y Node 24 en CI. Certificados y secretos excluidos de Git.
+- Estado de notarizacion y validacion visual registrado en `docs/PROJECT_STATUS.md`; los ZIPs antiguos 0.1.0 no cambian.
+
 ## 0.1.0
 
 Estado actual del MVP operativo.

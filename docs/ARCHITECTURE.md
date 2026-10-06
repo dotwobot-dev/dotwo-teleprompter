@@ -47,6 +47,18 @@ La app usa Electron con dos ventanas independientes.
 - `session:open`: abre sesión JSON.
 - `prompter:open`: abre o enfoca ventana Prompter.
 - `prompter:close`: cierra ventana Prompter.
+- `prompter:preview`: captura interna de la salida de Prompter, solicitada exclusivamente por Control.
 - `prompter:set-state`: estado Control -> Prompter.
 - `prompter:command`: comandos Control -> Prompter.
 - `prompter:runtime`: runtime Prompter -> Control.
+
+## Visor de Talento
+
+Control solicita capturas de `webContents.capturePage()` a Main a traves del preload.
+No hay un segundo renderizador de guion ni captura del escritorio: la miniatura
+proviene de la ventana real de Prompter, con sus transformaciones e indicaciones.
+La imagen completa se reduce a un ancho maximo de 640 px y se encaja sin recorte.
+Tras cada captura se esperan 125 ms en reproduccion/cuenta atras o 333 ms en pausa.
+Solo hay una captura en curso; las respuestas anteriores a un cierre o cambio de
+ventana se descartan. Control deja de solicitar capturas al plegar el visor u
+ocultarse, y Main tampoco captura si Control esta oculto o minimizado.

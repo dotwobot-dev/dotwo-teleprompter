@@ -1,11 +1,22 @@
 # Hoja de ruta
 
+## Validado en campo
+
+- El 2026-10-06 el usuario confirma funcionamiento de `0.2.0` Intel legacy e
+  instalacion por DMG en macOS 10.13, con despliegue en produccion interna
+  en la facultad. No se generaliza a otras variantes o a todos los flujos.
+
 ## Prioridad alta
 
-- Validar la beta `0.1.0` en campo real con segunda pantalla.
+- Ampliar pruebas de `0.2.0` en campo real con segunda pantalla.
 - Probar modo portatil de una sola pantalla.
 - Confirmar las tres familias macOS: Apple Silicon, Intel moderno e Intel legacy.
-- Revisar firma y notarizacion antes de distribucion publica.
+- Completar los PKG pendientes; los DMG ya estan firmados y notarizados.
+- Validar el visor real de Talento sobre la app moderna firmada.
+- Repetir la prueba legacy en macOS 10.13 al cambiar el artefacto desplegado.
+- Revisar dependencias del toolchain y de importacion antes de publicacion estable.
+- Mantener Electron moderno dentro de ramas soportadas; documentar la excepcion legacy.
+- Preparar commit local revisado antes de pedir a OpenClaw la sync con GitHub.
 
 ## Prioridad media
 

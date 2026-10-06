@@ -1,0 +1,47 @@
+{
+  "version": "0.2.0",
+  "date": "04/10/2026",
+  "page1": {
+    "left": [
+      {"title": "1 / Pantalla y guion", "text": "Instala el DMG arrastrando la app a Aplicaciones. Conecta el monitor del presentador, elígelo en <b>Pantalla</b> y pulsa <b>Abrir prompter</b>. Actualiza la lista con el botón circular si acabas de conectar una pantalla. Prepara el texto en <b>Ensayo</b>: escribe, pega o usa <b>Cargar archivo</b> con TXT, MD, SRT, VTT, CSV, DOCX o PDF. Word/PDF se convierten a texto y los subtítulos se limpian al importar."},
+      {"title": "2 / Guardar y recuperar", "text": "<b>Guardar txt</b> conserva el guion; <b>Guardar sesión</b> añade los ajustes de lectura. Recupera con <b>Abrir sesión</b> o <b>Recientes</b> y <b>Abrir</b>. La sesión no guarda pantalla, reproducción ni posición: vuelve a elegir la salida y comprueba el punto de arranque. Antes de reemplazar o limpiar un guion, revisa la confirmación y guarda una copia."},
+      {"title": "3 / Navegar sin sorpresas", "text": "<b>Sección</b> y <b>Marca</b> tienen dos destinos: <b>Control</b> coloca el cursor del editor; <b>Talento</b> mueve la lectura. <b>Buscar</b> muestra coincidencias y permite anterior/siguiente o limpiar sin mover al presentador. Los contadores resumen palabras, secciones y marcas; tiempo total/restante y porcentaje orientan la operación."}
+    ],
+    "right": [
+      {"title": "4 / Ajustar la lectura", "text": "Desplázate por los ajustes de la columna derecha. Cambia <b>velocidad</b> en palabras/s o usa Lento, Normal y Rápido. Ajusta <b>tamaño, interlineado, ancho</b> y <b>familia tipográfica</b>. <b>Posición vertical</b>: 0 centra el inicio, valores negativos lo suben y positivos lo bajan. Espejo invierte horizontalmente; Guía central marca la línea de lectura; Tema claro cambia el contraste. El fundido de los bordes es automático."},
+      {"title": "5 / Ver y seguir al talento", "text": "La miniatura <b>Talento</b> muestra la salida real, incluidos espejo, indicaciones, cuenta atrás y negro. Pulsa su cabecera para plegarla; también está en Panel directo. <b>Seg. escritura</b> lleva la lectura al lugar donde escribes o pegas y bloquea los saltos manuales de secciones/marcas. <b>Seg. lectura</b> sigue y señala la línea que lee el presentador y bloquea la edición."},
+      {"title": "6 / Repetir una configuración", "text": "Al final de los ajustes, <b>Presets setup</b> permite aplicar un perfil, guardar uno propio o borrarlo. Hay bases para Plató, Portátil, Espejo y Lectura cercana; los presets base no se sobrescriben ni borran. Guarda el setup cuando tipografía, espejo y ritmo estén probados con el presentador."}
+    ]
+  },
+  "page2": {
+    "left": [
+      {"title": "7 / Del ensayo al directo", "text": "<b>Directo</b> bloquea edición, carga y limpieza accidental; no inicia la lectura. <b>Panel directo</b> oculta el editor y los ajustes y deja los mandos; es una vista independiente del bloqueo. Vuelve con <b>Editar guion</b> y usa <b>Ensayo</b> para modificar el texto. El visor se puede plegar y, si no caben todos los mandos, el panel admite desplazamiento."},
+      {"title": "8 / Arrancar, pausar y ocultar", "text": "<b>Play/Pause</b> actúa al instante. Para arrancar con cuenta atrás, elige 3, 5 o 10 segundos y pulsa <b>Cuenta</b> en Control o usa Cmd+Enter. <b>Reiniciar/Inicio</b>, <b>Mitad</b> y <b>Final</b> reposicionan; los botones <b>- / +</b> del transporte saltan por párrafo. <b>Pantalla negra</b> oculta y pausa, sin cerrar; al salir de negro, pulsa Play para continuar. <b>Cerrar</b> cierra solo la salida."}
+    ],
+    "rightTitle": "9 / Marcas dentro del guion",
+    "rightIntro": "Escribe estos códigos o insértalos desde <b>Chuleta</b>. Control conserva las marcas; Talento las interpreta.",
+    "markup": [
+      ["# / ## / ###", "Secciones navegables."],
+      ["// Nota", "Nota interna; no sale al talento."],
+      ["[CAM: 1]", "Indicación flotante de cámara."],
+      ["[AVISO: Sonríe]", "Indicación flotante libre."],
+      ["[FIN AVISO]", "Retira la indicación activa."],
+      ["==texto==", "Resaltado visible al talento."]
+    ],
+    "markupNote": "Una marca sola afecta al siguiente bloque; dentro de un párrafo se activa desde ese punto. <b>Ahora/Siguiente</b> anticipa las indicaciones. Chuleta permite insertar, resaltar una selección y limpiar texto sin perder notas, secciones o marcas. Revisa sus avisos de códigos vacíos, sin cerrar o indicaciones que siguen hasta el final.",
+    "shortcuts": [
+      ["Espacio", "Play / Pause inmediato"],
+      ["Cmd+Enter", "Cuenta; también Ctrl+Enter"],
+      ["B", "Entrar / salir de pantalla negra"],
+      ["Izq. / Der.", "Párrafo anterior / siguiente"],
+      ["Arriba / Abajo", "±0,1 p/s; Shift: ±0,5"],
+      ["Home / End", "Inicio / final"],
+      ["Cmd+G / +Shift", "Buscar siguiente / anterior"],
+      ["Escape en Buscar", "Limpiar la búsqueda"]
+    ],
+    "shortcutNote": "Atajos de operación: sitúa el foco fuera del editor y de Buscar. Las flechas del transporte mueven párrafos; las de velocidad cambian el ritmo.",
+    "portable": "Con una sola pantalla, Talento añade una barra inferior: reiniciar, párrafos, Play/Pause y Vel - / Vel +. Con monitor externo, Control queda para el operador y la salida para el presentador.",
+    "checklist": "Antes de emitir: verifica pantalla, espejo, tamaño, velocidad y punto de inicio; guarda la sesión y pasa a Directo. Al terminar: pausa, guarda y cierra la salida. Ante una incidencia, anota variante, macOS, pasos y mensaje exacto.",
+    "compatibility": "Apple Silicon / Intel moderno: macOS 12+. Intel legacy: macOS 10.13 a 11; Electron 26 sin soporte. Firma y notarización no sustituyen las pruebas en los equipos del aula."
+  }
+}

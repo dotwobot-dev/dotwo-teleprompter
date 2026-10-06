@@ -10,5 +10,16 @@ logs/
 reports/
 artifacts/
 build-output/
+output/
+tmp/
 *.log
 *.tmp
+.env
+.env.*
+!.env.example
+*.p12
+*.pfx
+*.p8
+*.key
+*.cer
+*.certSigningRequest

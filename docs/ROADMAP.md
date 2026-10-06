@@ -7,7 +7,8 @@ Near-term priorities:
 
 - Keep the app stable for rehearsal and live teleprompter work.
 - Improve public packaging notes and unsigned beta distribution.
-- Prepare signed and notarized macOS builds when Apple Developer ID is ready.
+- Complete notarization and validation of the 0.2.0 signed candidate with the installed Developer ID identities.
+- Keep maintained Electron builds for macOS 12+ separate from the internal Intel 10.13 compatibility build.
 - Keep keyboard/operator workflows fast and predictable.
 
 Distribution roadmap:
@@ -15,4 +16,4 @@ Distribution roadmap:
 - Unsigned ZIP beta builds.
 - Signed app bundle.
 - Apple notarization.
-- Signed ZIP or DMG release.
+- ZIP containing a signed/notarized app, signed/notarized DMG and signed/notarized PKG.

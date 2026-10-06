@@ -4,6 +4,10 @@
 
 Esta carpeta recoge la primera beta operativa de DoTwo Teleprompter.
 
+Documento historico de `0.1.0`: los paquetes archivados no cambian. El candidato
+`0.2.0` tiene Electron moderno para macOS 12+ y un flujo separado de firma;
+consultar [Empaquetado](BUILD.md) y [Estado actual](PROJECT_STATUS.md).
+
 Objetivo de la beta:
 
 - Probar la app en campo real.
@@ -14,7 +18,7 @@ Objetivo de la beta:
 
 ## Builds de prueba
 
-Los paquetes finales se generan con:
+Los paquetes se generaron con el flujo beta, usando el runtime de esa version:
 
 ```bash
 npm run release:mac
@@ -32,7 +36,7 @@ Distribuir siempre como `.zip` cuando se copie a otro Mac. En las pruebas,
 el bundle `.app` sin comprimir puede perder permisos o metadatos al moverlo
 por carpetas compartidas.
 
-## Matriz de compatibilidad
+## Matriz historica de compatibilidad 0.1.0
 
 | Paquete | Arquitectura | macOS objetivo | Uso |
 | --- | --- | --- | --- |
