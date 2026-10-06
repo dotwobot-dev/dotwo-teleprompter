@@ -14,10 +14,12 @@ and internal testing.
   verified on the local build Mac. The two identities use separate private keys.
 - Notarization credentials are stored in the local Keychain profile
   `dotwo-notary`; authentication has been verified without exporting secrets.
-- Version `0.2.0` is an unpublished candidate. A new local workflow requires
-  both identities, hardened runtime, notarization and artifact verification.
-  See `docs/PROJECT_STATUS.md` for actual build results; configuration alone
-  is not evidence of a completed signed/notarized release.
+- Version `0.2.0` source is on GitHub `main`, without a public tag or release.
+  Three new candidates built from clean commit `9ec71a6` passed signing,
+  notarization and technical ZIP/DMG/PKG verification. Installation and field
+  behavior of those new artifacts remain untested. An older legacy DMG is in
+  internal faculty use; its validation does not transfer to the new build.
+  See `docs/PROJECT_STATUS.md` for variant-level status.
 
 ## Compatibility policy
 

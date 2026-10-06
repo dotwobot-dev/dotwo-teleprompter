@@ -7,13 +7,16 @@ Fecha de actualizacion: 2026-10-06
 DoTwo Teleprompter es una app Electron de escritorio para control de guion y
 salida limpia de teleprompter en una segunda ventana.
 
-Version consolidada archivada: `0.1.0`. Version local candidata: `0.2.0`.
+Version consolidada archivada: `0.1.0`. Fuente `0.2.0` en GitHub `main`.
+Tres candidatos nuevos `0.2.0` firmados y notarizados, con verificacion tecnica
+de ZIP/DMG/PKG; **instalacion y funcionamiento de campo aun no probados**.
 
-Estado: version `0.2.0` Intel legacy instalada por DMG y en produccion interna
+Estado: una version anterior del candidato `0.2.0` Intel legacy, construida
+desde el arbol sin commit, instalada por DMG y en produccion interna
 en la facultad, segun confirmacion del usuario recibida el 2026-10-06.
-No equivale a release publica GitHub ni a validacion completa de otras variantes.
+No equivale a release publica GitHub ni a validacion de los candidatos nuevos.
 
-Cambio no publicado en GitHub pero presente en los tres candidatos internos:
+Cambio incorporado a la fuente `0.2.0` y presente en los candidatos:
 visor plegable de la salida real de Talento en la zona superior derecha de
 Control y en Panel directo. Ya se han tomado capturas
 nativas de la app firmada y su visor con un guion de demostracion y perfil
@@ -96,9 +99,8 @@ combinaciones de formato, captura en movimiento y pantallas externas.
 Se cerro la primera espera local de quince minutos sin cancelar la solicitud
 de Apple. El flujo nuevo limita cada espera a cinco minutos y permite
 `--resume` sobre el directorio de variante; conserva IDs y evita duplicados.
-No se deben borrar esos candidatos ni reemplazar las apps mientras esperan.
-
-Directorios para retomar:
+En aquel momento se conservaron estos directorios para retomar; el 06/10 Do
+decidio abandonar la reanudacion de esta serie y se retiraron del disco local:
 
 ```text
 release/signed/0.2.0-2026-10-04T14-15-16-214Z/modern-arm64/
@@ -131,9 +133,9 @@ Los tres DMG tienen copias separadas para pruebas en el NAS, con ticket
 adjunto, `codesign --verify --strict`, `stapler validate` y Gatekeeper
 `Notarized Developer ID` comprobados. Las copias se verificaron con SHA-256
 despues de transferirlas; cada carpeta incluye `verification.json` e
-`INSTALLATION.md`. Las apps y DMG originales enviados a Apple no se alteraron,
-para que el flujo `--resume` conserve sus hashes. Sus manifiestos reflejan
-la ultima espera local; al reanudar, el flujo consultara el estado de Apple.
+`INSTALLATION.md`. Los originales no se alteraron mientras se evaluaba
+`--resume`; sus manifiestos reflejan la ultima espera local. Posteriormente
+se retiraron los candidatos completos y no se reanudaran esas solicitudes.
 
 ```text
 /Volumes/BackUP_MacMini/DoTwo_Teleprompter/release_archive/CANDIDATE_0_2_0_TESTS/
@@ -149,11 +151,10 @@ Texto, capturas originales y generador en `docs/manual/`; PDF y renders fuera
 de Git en `output/pdf/` y `tmp/pdfs/`. Revisado visualmente y comprobado el
 numero de paginas y la extraccion de texto antes de entregarlo.
 
-Estos DMG se prepararon para las pruebas solicitadas. El usuario confirma la
+Estos DMG del 04/10 se prepararon para las pruebas solicitadas. El usuario confirma la
 instalacion DMG y uso de Intel legacy en macOS 10.13 y su despliegue en la
-facultad. No hay release publica ni sincronizacion de estos cambios a GitHub.
-Siguen pendientes notarizacion de PKG, revision de dependencias y ampliacion
-de pruebas de campo; no cambiar estados tecnicos de manifiestos por ese despliegue.
+facultad. No hay release publica. En esta serie historica siguen pendientes los
+PKG y sus manifiestos; la nueva serie desde SHA limpio se detalla mas abajo.
 
 ## Validacion de campo y traspaso 2026-10-06
 
@@ -163,11 +164,10 @@ No se han aportado modelo del equipo ni un listado detallado de casos:
 registrar esta confirmacion sin inventar cobertura de pantallas, formatos
 de guion o pruebas en Apple Silicon/Intel moderno.
 
-Incidencias y peticiones futuras se trataran en esta sesion cuando las comunique
-el usuario. No se ha creado vigilancia automatica ni publicado una release.
-El repo mantiene cambios sin commit; GitHub `main` consultado el 2026-10-06
-sigue en `e6720f0d18dea5d70bea0bae3a443b56a9e2057e`.
-Antes de sync con OpenClaw, preparar y revisar el commit local.
+Incidencias y peticiones futuras se trataran cuando las comunique el usuario.
+No se ha creado vigilancia automatica ni publicado una release. Antes del
+commit del 06/10, GitHub `main` seguia en
+`e6720f0d18dea5d70bea0bae3a443b56a9e2057e`.
 
 Revision de procedencia del 2026-10-06: los tres manifiestos registran ese
 commit y `sourceDirty: true`; no identifican una revision limpia del fuente.
@@ -180,6 +180,38 @@ Los DMG originales coinciden con sus hashes de manifiesto. Las copias del NAS,
 con ticket grapado, tienen hashes distintos que coinciden con sus recibos
 `verification.json`. No mezclar estas dos series de artefactos ni llamar
 release reproducible al candidato basado en un arbol sucio.
+
+## Nueva serie firmada desde SHA limpio — 2026-10-06
+
+Fuente: commit `9ec71a67d650f7ce721bd7b37d8927790a4cbc84`, push normal a
+GitHub `main` y workflow `Check` aprobado sobre ese SHA. Los tres candidatos
+nuevos estan en `release/signed/0.2.0-2026-10-06T17-24-32-239Z/`, uno por
+variante: `modern-arm64`, `modern-x64` y `legacy-x64`.
+
+Los tres manifiestos registran `sourceDirty: false` y `status: verified`.
+Apple acepto por separado app, DMG y PKG de cada variante. El flujo comprobo
+firma, tickets y Gatekeeper; los nueve SHA-256 de ZIP/DMG/PKG se recalcularon
+y coinciden con sus manifiestos. Aqui `verified` significa **verificacion
+tecnica de artefactos**, no prueba de instalacion ni de uso de la app.
+
+Do prefiere realizar las pruebas de campo el 2026-10-07 en la facultad, donde
+hay principalmente Macs Intel y tambien algunos M1/M2. Hasta recibir sus
+resultados, clasificar estos paquetes como **firmados y notarizados, no probados
+en instalacion/campo**. No se han instalado en este Mac ni sustituido la
+legacy en uso; tampoco se ha creado tag ni publicado release. Conservar los
+IDs de Apple del 04/10 solo como registro historico, sin mezclarlos con esta
+nueva serie.
+
+El NAS conserva una copia verificada de los seis DMG/PKG nuevos en
+`release_archive/CANDIDATE_0_2_0_9ec71a6_FIRMADO_NO_PROBADO/`, sin apps
+sueltas ni ZIP duplicados. Cada instalador coincide con el SHA-256 de su
+manifiesto; `ESTADO.md` distingue verificacion tecnica de pruebas de campo.
+Los tres DMG de prueba del 04/10 siguen en `CANDIDATE_0_2_0_TESTS/` y alli se
+archivaron sus PKG originales, firmados pero **sin notarizar**, con manifiestos
+separados. Do decidio prescindir de los tres candidatos locales del 04/10 el
+2026-10-06. Se eliminaron tras verificar DMG y PKG historicos en el NAS;
+esas copias no permiten reanudar `--resume`, y no se intentara recuperar las
+solicitudes antiguas. Solo queda local la nueva serie firmada desde SHA limpio.
 
 Guia y prompt para el hilo de Compress, guardados en la raiz compartida:
 
@@ -233,8 +265,8 @@ certificados ni credenciales), preparada en esta sesion:
 /Volumes/BackUP_MacMini/DoTwo_Teleprompter/repo_backups/DoTwo_Teleprompter_field_validation_20261006.tar.gz
 ```
 
-Los backups anteriores de firma, DMG y manual se conservan. Las apps y
-contenedores candidatos siguen locales en `release/signed/`; este backup de fuente
+Los backups anteriores de firma, DMG y manual se conservan. Solo la serie nueva
+de apps y contenedores sigue local en `release/signed/`; este backup de fuente
 no permite retomar un ticket si se pierde la app exacta enviada a Apple.
 
 ## Limpieza 2026-06-03
@@ -251,9 +283,14 @@ Archivado en NAS:
 
 ## Pendiente relevante
 
-- Reanudar los candidatos y completar la notarizacion/verificacion de los PKG.
+- La serie historica del 04/10 quedo retirada localmente; conservar sus DMG de
+  prueba y PKG sin notarizar en el NAS solo como historico, sin reanudarla.
+  La serie nueva tiene app, DMG y PKG firmados, notarizados y verificados
+  tecnicamente.
 - Completar las pruebas funcionales del visor con el runtime aprobado, sin ejecutar el Electron 31 bloqueado.
-- Pruebas de campo adicionales en Apple Silicon, Intel moderno e Intel legacy;
-  app/instalacion legacy 10.13 ya confirmadas por el usuario en produccion interna.
+- Probar instalacion y funcionamiento de los **nuevos** artefactos en Macs Intel
+  y M1/M2 de la facultad. La confirmacion legacy 10.13 corresponde al DMG anterior.
 - Revision de dependencias antes de distribucion publica.
-- Preparar commit local revisado antes de pedir sync con GitHub a OpenClaw.
+- Registrar resultados de campo antes de publicar tag/release. Preparar antes
+  la documentacion y las notas de entrega sobre el SHA exacto, manteniendo
+  explicitamente el estado «firmado y notarizado, no probado en campo».

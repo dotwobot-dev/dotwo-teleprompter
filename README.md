@@ -17,10 +17,12 @@ Consulta también `THIRD_PARTY_NOTICES.md` para dependencias como Electron, Mamm
 
 ## Distribución
 
-Los ZIPs de la beta `0.1.0` archivados siguen sin firmar ni notarizar. La version
-local `0.2.0` es un candidato sin release publica en GitHub. Una copia de la
-variante Intel legacy ya se usa internamente en la facultad; esto no valida
-las otras variantes ni cierra los manifiestos de release.
+Los ZIPs de la beta `0.1.0` archivados siguen sin firmar ni notarizar. El
+codigo `0.2.0` esta en GitHub `main`, sin tag ni release publica. Tres candidatos
+nuevos tienen firma, notarizacion y verificacion tecnica completas, pero aun
+no se han probado en instalacion ni campo. Una copia **anterior** de la variante
+Intel legacy se usa internamente en la facultad; su prueba no valida los
+paquetes nuevos.
 
 El flujo nuevo prepara ZIP, DMG y PKG con Developer ID y exige notarizacion y
 verificaciones locales antes de marcar un candidato como valido. Modernas:
