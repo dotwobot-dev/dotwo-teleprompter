@@ -1,7 +1,8 @@
 # Distribution
 
-Current public builds are intended as unsigned beta ZIPs for technical users
-and internal testing.
+The historical `0.1.0` beta ZIPs are unsigned. The public `v0.2.0-rc.1`
+prerelease provides signed/notarized DMG and PKG installers for controlled
+testing, not a stable or field-validated release.
 
 ## Current status
 
@@ -14,8 +15,9 @@ and internal testing.
   verified on the local build Mac. The two identities use separate private keys.
 - Notarization credentials are stored in the local Keychain profile
   `dotwo-notary`; authentication has been verified without exporting secrets.
-- Version `0.2.0` source is on GitHub `main`, without a public tag or release.
-  Three new candidates built from clean commit `9ec71a6` passed signing,
+- Version `0.2.0` source is on GitHub `main`; tag `v0.2.0-rc.1` points to the
+  binary source commit `9ec71a6`. The public prerelease contains six installers
+  plus SHA-256 checksums. Three candidates passed signing,
   notarization and technical ZIP/DMG/PKG verification. Installation and field
   behavior of those new artifacts remain untested. An older legacy DMG is in
   internal faculty use; its validation does not transfer to the new build.

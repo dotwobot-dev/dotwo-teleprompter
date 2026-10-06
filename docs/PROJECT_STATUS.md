@@ -10,6 +10,7 @@ salida limpia de teleprompter en una segunda ventana.
 Version consolidada archivada: `0.1.0`. Fuente `0.2.0` en GitHub `main`.
 Tres candidatos nuevos `0.2.0` firmados y notarizados, con verificacion tecnica
 de ZIP/DMG/PKG; **instalacion y funcionamiento de campo aun no probados**.
+Publicacion de prueba: GitHub prerelease `v0.2.0-rc.1`, no version estable.
 
 Estado: una version anterior del candidato `0.2.0` Intel legacy, construida
 desde el arbol sin commit, instalada por DMG y en produccion interna
@@ -198,9 +199,16 @@ Do prefiere realizar las pruebas de campo el 2026-10-07 en la facultad, donde
 hay principalmente Macs Intel y tambien algunos M1/M2. Hasta recibir sus
 resultados, clasificar estos paquetes como **firmados y notarizados, no probados
 en instalacion/campo**. No se han instalado en este Mac ni sustituido la
-legacy en uso; tampoco se ha creado tag ni publicado release. Conservar los
+legacy en uso. El 06/10 se publico una prerelease de pruebas; conservar los
 IDs de Apple del 04/10 solo como registro historico, sin mezclarlos con esta
 nueva serie.
+
+La prerelease publica `v0.2.0-rc.1` apunta al SHA binario
+`9ec71a67d650f7ce721bd7b37d8927790a4cbc84`, no al commit documental
+posterior `ab2fa8a454dd6892b1ee6607527ef1072f3742f1`. GitHub contiene
+seis instaladores (DMG y PKG para las tres variantes) y un archivo de checksums;
+los seis digests publicados coinciden con los manifiestos y el NAS. La release
+esta marcada `prerelease`, no `latest` ni estable. No atribuirle pruebas de campo.
 
 El NAS conserva una copia verificada de los seis DMG/PKG nuevos en
 `release_archive/CANDIDATE_0_2_0_9ec71a6_FIRMADO_NO_PROBADO/`, sin apps
@@ -291,6 +299,6 @@ Archivado en NAS:
 - Probar instalacion y funcionamiento de los **nuevos** artefactos en Macs Intel
   y M1/M2 de la facultad. La confirmacion legacy 10.13 corresponde al DMG anterior.
 - Revision de dependencias antes de distribucion publica.
-- Registrar resultados de campo antes de publicar tag/release. Preparar antes
-  la documentacion y las notas de entrega sobre el SHA exacto, manteniendo
-  explicitamente el estado «firmado y notarizado, no probado en campo».
+- Registrar resultados de campo y feedback de la prerelease antes de decidir
+  la release estable; mantener el estado «firmado y notarizado, no probado en
+  campo» hasta tener esa evidencia.

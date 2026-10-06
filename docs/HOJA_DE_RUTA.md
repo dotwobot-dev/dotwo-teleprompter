@@ -17,8 +17,8 @@
 - Repetir la prueba legacy en macOS 10.13 al cambiar el artefacto desplegado.
 - Revisar dependencias del toolchain y de importacion antes de publicacion estable.
 - Mantener Electron moderno dentro de ramas soportadas; documentar la excepcion legacy.
-- Cerrar y sincronizar la documentacion del candidato nuevo sobre `main` sin
-  alterar el SHA de fuente usado para construir los paquetes.
+- Recoger feedback de la prerelease `v0.2.0-rc.1` sin confundir la publicacion
+  para pruebas con validacion de campo o release estable.
 
 ## Prioridad media
 

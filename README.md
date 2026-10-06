@@ -18,9 +18,10 @@ Consulta también `THIRD_PARTY_NOTICES.md` para dependencias como Electron, Mamm
 ## Distribución
 
 Los ZIPs de la beta `0.1.0` archivados siguen sin firmar ni notarizar. El
-codigo `0.2.0` esta en GitHub `main`, sin tag ni release publica. Tres candidatos
-nuevos tienen firma, notarizacion y verificacion tecnica completas, pero aun
-no se han probado en instalacion ni campo. Una copia **anterior** de la variante
+codigo `0.2.0` esta en GitHub y el candidato `v0.2.0-rc.1` se publico como
+[prerelease de pruebas](https://github.com/dotwobot-dev/dotwo-teleprompter/releases/tag/v0.2.0-rc.1).
+Sus tres variantes tienen firma, notarizacion y verificacion tecnica completas,
+pero aun no se han probado en instalacion ni campo. Una copia **anterior** de la variante
 Intel legacy se usa internamente en la facultad; su prueba no valida los
 paquetes nuevos.
 
