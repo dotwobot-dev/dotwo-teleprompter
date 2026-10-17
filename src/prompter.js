@@ -36,6 +36,15 @@ const soloForward = document.querySelector("#soloForward");
 const soloSlower = document.querySelector("#soloSlower");
 const soloSpeed = document.querySelector("#soloSpeed");
 const soloFaster = document.querySelector("#soloFaster");
+const soloExit = document.querySelector("#soloExit");
+
+soloExit?.addEventListener("click", () => window.teleprompter.closePrompter());
+window.addEventListener("keydown", (event) => {
+  if (document.body.classList.contains("single-display") && event.metaKey && event.key === "Escape") {
+    event.preventDefault();
+    window.teleprompter.closePrompter();
+  }
+});
 
 window.teleprompter.onState((nextState) => {
   const previousText = state.text;

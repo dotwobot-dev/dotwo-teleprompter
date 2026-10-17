@@ -166,6 +166,10 @@ const els = {
   markupHelpDialog: document.querySelector("#markupHelpDialog"),
   openPrompter: document.querySelector("#openPrompter"),
   closePrompter: document.querySelector("#closePrompter"),
+  includePrerelease: document.querySelector("#includePrerelease"),
+  checkUpdate: document.querySelector("#checkUpdate"),
+  updateStatus: document.querySelector("#updateStatus"),
+  downloadUpdate: document.querySelector("#downloadUpdate"),
   cleanText: document.querySelector("#cleanText"),
   saveText: document.querySelector("#saveText"),
   saveSession: document.querySelector("#saveSession"),
@@ -279,6 +283,10 @@ async function init() {
   await refreshScreens();
   sendState();
   renderCompactDirectMode();
+  const appVersion = await window.teleprompter.getVersion();
+  els.includePrerelease.checked = localStorage.getItem("dotwo-update-prerelease") === "true" ||
+    (localStorage.getItem("dotwo-update-prerelease") === null && /-(beta|rc)\./.test(appVersion));
+  checkUpdate();
 
   window.teleprompter.onRuntime((runtime) => {
     isPlaying = Boolean(runtime.isPlaying);
@@ -319,6 +327,16 @@ async function init() {
 }
 
 function bindControls() {
+  els.checkUpdate.addEventListener("click", checkUpdate);
+  els.includePrerelease.addEventListener("change", () => {
+    localStorage.setItem("dotwo-update-prerelease", String(els.includePrerelease.checked));
+    checkUpdate();
+  });
+  els.downloadUpdate.addEventListener("click", async () => {
+    if (!els.downloadUpdate.dataset.url) return;
+    const opened = await window.teleprompter.downloadUpdate(els.downloadUpdate.dataset.url);
+    if (!opened) els.updateStatus.textContent = "No se pudo abrir la descarga";
+  });
   els.talentPreview.addEventListener("toggle", restartPrompterPreview);
   document.addEventListener("visibilitychange", restartPrompterPreview);
   window.addEventListener("pagehide", () => {
@@ -482,6 +500,29 @@ function bindControls() {
     }
   });
   window.addEventListener("resize", () => renderReadingFollow());
+}
+
+async function checkUpdate() {
+  els.checkUpdate.disabled = true;
+  els.updateStatus.textContent = "Comprobando…";
+  els.downloadUpdate.hidden = true;
+  delete els.downloadUpdate.dataset.url;
+  try {
+    const result = await window.teleprompter.checkForUpdate(els.includePrerelease.checked);
+    if (result.status === "available") {
+      els.updateStatus.textContent = `Nueva versión ${result.version}${result.prerelease ? " (prueba)" : ""}`;
+      els.downloadUpdate.dataset.url = result.url;
+      els.downloadUpdate.hidden = false;
+    } else if (result.status === "current") {
+      els.updateStatus.textContent = "Versión al día";
+    } else {
+      els.updateStatus.textContent = result.message || "Comprobación no disponible";
+    }
+  } catch {
+    els.updateStatus.textContent = "No se pudo comprobar";
+  } finally {
+    els.checkUpdate.disabled = false;
+  }
 }
 
 function bindRange(key, cast, suffix) {

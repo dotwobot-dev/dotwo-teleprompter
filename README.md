@@ -25,6 +25,11 @@ pero aun no se han probado en instalacion ni campo. Una copia **anterior** de la
 Intel legacy se usa internamente en la facultad; su prueba no valida los
 paquetes nuevos.
 
+La fuente actual prepara `0.2.1-beta.1` para una nueva prerelease con aviso de
+actualizaciones y descarga manual del DMG correcto, salida clara del visor en
+un monitor y una ventana Control inicial más amplia. Aún no implica validación
+en campo de esa versión.
+
 El flujo nuevo prepara ZIP, DMG y PKG con Developer ID y exige notarizacion y
 verificaciones locales antes de marcar un candidato como valido. Modernas:
 Apple Silicon e Intel, macOS 12+, Electron 43.7.7. Compatibilidad: Intel,

@@ -1,21 +1,24 @@
-const { app, BrowserWindow, dialog, ipcMain, screen } = require("electron");
+const { app, BrowserWindow, dialog, ipcMain, screen, shell } = require("electron");
 const fs = require("fs/promises");
 const mammoth = require("mammoth");
 const pdfParse = require("pdf-parse");
 const path = require("path");
+const { checkForUpdate, isApprovedDownload } = require("./updates");
 
 let controlWindow;
 let prompterWindow;
 let previewCapture;
+let offeredUpdateUrl;
 const TEXT_EXTENSIONS = ["txt", "md", "markdown", "srt", "vtt", "csv"];
 const DOCUMENT_EXTENSIONS = ["docx", "pdf"];
 
 function createControlWindow() {
+  const { width: availableWidth, height: availableHeight } = screen.getPrimaryDisplay().workAreaSize;
   controlWindow = new BrowserWindow({
-    width: 1180,
-    height: 780,
-    minWidth: 820,
-    minHeight: 560,
+    width: Math.min(availableWidth, 1650, Math.max(820, Math.round(availableWidth * 0.92))),
+    height: Math.min(availableHeight, 1050, Math.max(560, Math.round(availableHeight * 0.92))),
+    minWidth: Math.min(820, availableWidth),
+    minHeight: Math.min(560, availableHeight),
     title: "DoTwo Teleprompter Control",
     backgroundColor: "#101216",
     webPreferences: {
@@ -312,7 +315,23 @@ ipcMain.handle("prompter:open", (_event, displayId) => {
 ipcMain.handle("prompter:close", () => {
   if (prompterWindow) {
     prompterWindow.close();
+    controlWindow?.focus();
   }
+  return true;
+});
+
+ipcMain.handle("updates:check", async (event, includePrerelease) => {
+  if (!controlWindow || event.sender !== controlWindow.webContents) return { status: "unavailable" };
+  const result = await checkForUpdate({ currentVersion: app.getVersion(), includePrerelease: Boolean(includePrerelease) });
+  offeredUpdateUrl = result.status === "available" ? result.url : undefined;
+  return result;
+});
+
+ipcMain.handle("updates:version", () => app.getVersion());
+
+ipcMain.handle("updates:download", async (event, url) => {
+  if (!controlWindow || event.sender !== controlWindow.webContents || url !== offeredUpdateUrl || !isApprovedDownload(url)) return false;
+  await shell.openExternal(url);
   return true;
 });
 

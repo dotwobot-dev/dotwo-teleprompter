@@ -55,12 +55,16 @@ function createHarness() {
     app: { whenReady: () => ({ then() {} }), on() {} },
     BrowserWindow: Window,
     ipcMain: { handle: (name, handler) => handlers.set(name, handler), on() {} },
-    screen: { getAllDisplays: () => [{ id: 1, bounds: { x: 0, y: 0, width: 1920, height: 1080 } }] }
+    screen: {
+      getAllDisplays: () => [{ id: 1, bounds: { x: 0, y: 0, width: 1920, height: 1080 } }],
+      getPrimaryDisplay: () => ({ workAreaSize: { width: 1920, height: 1080 } })
+    }
   };
   const context = vm.createContext({
     __dirname: path.join(__dirname, "../src"),
     process,
     require: (name) => name === "electron" ? electron
+      : name === "./updates" ? { checkForUpdate: async () => ({ status: "current" }), isApprovedDownload: () => true }
       : ["mammoth", "pdf-parse"].includes(name) ? {} : require(name)
   });
   vm.runInContext(mainSource, context);

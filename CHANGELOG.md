@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.2.1-beta.1 - Prerelease de pruebas
+
+- Comprobación discreta de versiones en GitHub, con aviso y descarga manual del DMG compatible con la arquitectura y macOS. Las versiones de prueba tienen selector independiente; no hay instalación ni reinicio automáticos.
+- En modo de un solo monitor, botón «Salir del visor» y atajo `Cmd+Esc` para cerrar únicamente Talento y volver a Control.
+- Control abre con mayor tamaño inicial, adaptado al área útil de la pantalla.
+- Candidato pendiente de prueba en portátil y en el Intel legacy de la facultad; no es aún release candidate ni versión estable.
+
 ## 0.2.0 - Candidato sin publicar
 
 - DMG con instalacion por arrastre a Aplicaciones, instrucciones en castellano, fondo Retina y guia de instalacion/actualizacion.

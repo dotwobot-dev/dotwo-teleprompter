@@ -9,6 +9,7 @@
 
 ## Operacion
 
+- En un solo monitor, «Salir del visor» o `Cmd+Esc` cierran Talento y devuelven Control; la app permanece abierta.
 - `Ensayo`: permite editar y preparar el guion.
 - `Directo`: bloquea la edicion accidental del texto.
 - `Seguir escritura`: al escribir o pegar en el editor, el prompter salta a esa zona del guion.

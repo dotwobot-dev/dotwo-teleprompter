@@ -24,6 +24,12 @@ la app. Puedes eliminar el archivo `.dmg` despues de instalarla.
 
 ## Actualizar
 
+Cualquier versión que incluya «Buscar actualización» consulta las releases
+públicas de GitHub al abrir Control y cuando se pulsa el botón. Las versiones
+de prueba solo se ofrecen con «Versiones de prueba» activado. Si hay una
+versión nueva, «Descargar DMG» abre el instalador adecuado para el Mac; no
+instala ni cierra la app. Guarda la sesión antes de actualizar.
+
 Cierra Teleprompter antes de arrastrar la nueva version a Aplicaciones. Si
 Finder pregunta, confirma Reemplazar solo despues de comprobar que es la
 variante correcta para el equipo. La app guarda guiones, ajustes, recientes

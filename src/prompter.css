@@ -212,7 +212,7 @@ body.light #countdownOverlay {
   grid-template-columns: 40px 40px minmax(86px, auto) 40px 60px minmax(66px, auto) 60px;
   align-items: center;
   gap: 8px;
-  width: min(calc(100vw - 32px), 560px);
+  width: min(calc(100vw - 32px), 660px);
   padding: 10px;
   border: 1px solid rgba(110, 231, 183, 0.28);
   border-radius: 12px;
@@ -224,6 +224,10 @@ body.light #countdownOverlay {
 
 body.single-display .solo-controls {
   display: grid;
+}
+
+.solo-exit {
+  grid-column: 1 / -1;
 }
 
 .solo-controls button {
